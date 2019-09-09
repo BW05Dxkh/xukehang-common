@@ -37,12 +37,14 @@ public class StringUtils {
 	 * 标签。 使用场景：网页文本框传到后台的字符串就可能就会回车换行
 	 * 
 	 */
-	public static String toHtml(String text) {
+	public static String toHtml(String src) {
 
-		String[] strings = text.split("\\\r");
+		String string = src.replaceAll("\\\n\r", "\n");
+	     string = string.replaceAll("\\\r", "</br>");		
+		String[] split = src.split("\\\n");
 		StringBuilder sb = new StringBuilder();
-		for (String string : strings) {
-			sb.append("<p>").append(string).append("</p>").append("<br/>");
+		for (int i = 0; i < split.length; i++) {
+			sb.append("<p>").append(split[i]).append("</p>");
 		}
 		return sb.toString();
 
