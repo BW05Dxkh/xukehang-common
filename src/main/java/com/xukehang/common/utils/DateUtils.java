@@ -15,7 +15,7 @@ public class DateUtils {
 	 * @param futureDate
 	 * @return
 	 */
-	public int getRemainDays(Date futureDate) {
+	public static int getRemainDays(Date futureDate) {
 		return (int) (futureDate.getTime() - new Date().getTime()) / 1000 / 3600 / 24;
 	}
 
