@@ -1,6 +1,13 @@
 package com.xukehang.common.utils;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -101,6 +108,29 @@ public class FileUtils {
 		default:
 			return 0;
 		}
+
+	}
+	
+	/**
+	 * 使用工具包工程中的流工具类读取该文本文件，且不得乱码。如果输入流使用了FileInputStream
+	 */
+	public static List fileToBean(String fileName, Constructor constructor)
+			throws IOException, NoSuchMethodException, SecurityException,
+			InstantiationException, IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException {
+
+		File file = new File(fileName);
+		BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+		String lineString = null;
+		List list = new ArrayList();
+		while ((lineString = bufferedReader.readLine()) != null) {
+			String[] split = lineString.split("\\|");
+			Object object = constructor.newInstance(split);
+			list.add(object);
+
+		}
+
+		return list;
 
 	}
 }
